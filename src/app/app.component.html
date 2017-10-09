@@ -1,0 +1,144 @@
+<div class="container">
+  <div class="container-fluid">
+<div class="row">
+  <form class="form">
+      <div class="col-md-3 col-xs-6 form-group">      
+    <input class="form-control" id="name" name="name" (change)="search()" [(ngModel)]="searchName" placeholder="Search by Name" type="search" />
+      </div>
+      <div class="col-md-3 col-xs-6 form-group">      
+          <input class="form-control" id="phone" placeholder="Search by Phone" name="phone" [(ngModel)]="searchPhone"  type="search" />
+            </div>
+      <div class="col-md-3 col-xs-6 form-group">                
+    <input class="btn btn-primary"  type="submit" value="Search" (click)="search()" >
+    <input class="btn btn-danger"  type="reset" value="Reset">    
+      </div>
+  </form>
+</div>
+  <br><br>
+
+  <div class="row">
+    <form class="form">
+      <div class="col-md-3 col-xs-6 form-group">
+        <input class="form-control" [(ngModel)]="contactsPerPage" id="contactsPerPage" name="contactsPerPage" placeholder="Enter Contacts Per Page ..." type="number">
+      </div>
+
+      <div class="col-md-3 col-xs-6 form-group">
+        <input class="form-control" id="page" [(ngModel)]="page" name="page" placeholder="Enter Page ..." type="number">
+      </div>
+
+      <div class="col-md-3 col-xs-6 form-group">                
+          <input class="btn btn-primary"  type="submit" (click)="list()" value="List Contacts" />
+          <input class="btn btn-danger"  type="reset" value="Reset">          
+        </div>
+      </form>
+  </div>
+<br><br>
+  <div class="row">
+  <form  class="form" ngNativeValidate (ngSubmit)="addContact()" >  
+        <div class="col-md-3 col-xs-6 form-group">                  
+      <input autocomplete="off" class="form-control"  [(ngModel)]="addName" name="addName" maxlength="99" id="inputName" placeholder="Enter a name..." type="text" required >
+    </div>
+        
+        <div class="col-md-3 col-xs-6 form-group">                  
+      <input autocomplete="off" class="form-control" pattern="\d{2}[\-]\d{3}[\-]\d{4}" maxlength="11" [(ngModel)]="addPhone" name="addPhone"  id="inputTel" placeholder="Enter a phone format : xx-xxx-xxxx" type="tel" required >
+        </div>
+        <div class="col-md-3 col-xs-6 form-group">                  
+      <input autocomplete="off" class="form-control" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"  [(ngModel)]="addEmail" name="addEmail" id="inputEmail" placeholder="Enter an email..." type="email" required>
+        </div>
+        <div class="col-md-3 col-xs-6 form-group">                  
+      <input class="btn btn-primary"  type="submit" value="Add contact" />
+      <input class="btn btn-danger"  type="reset" value="Reset">      
+    </div>
+  </form>
+</div>
+
+  <bR>
+    <div *ngIf="start">
+      <h3>All Contacts</h3>
+  <table class="table table-bordered table-striped table-hover ">
+    <thead>
+      <tr>
+        <th> Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contact of contacts | orderBy : 'name' ">
+        <td>{{contact.name}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <td><button type="button" class="btn btn-danger" (click)="remove(contact)">Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+    </div>
+
+    <div *ngIf="listing">
+      <h3>Listed Contacts</h3>
+  <table class="table table-bordered table-striped table-hover ">
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Phone</th>
+          <th>Email</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let contact of listedContacts | orderBy : 'name'">
+          <td>{{contact.name}}</td>
+          <td>{{contact.phone}}</td>
+          <td>{{contact.email}}</td>
+          <td><button type="button" class="btn btn-danger" (click)="remove(contact)">Remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+</div>
+
+<div *ngIf="added">
+    <h3>New Contacts</h3>
+<table class="table table-bordered table-striped table-hover ">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Phone</th>
+        <th>Email</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let contact of newContacts | orderBy : 'name'">
+        <td>{{contact.name}}</td>
+        <td>{{contact.phone}}</td>
+        <td>{{contact.email}}</td>
+        <td><button type="button" class="btn btn-danger" (click)="remove(contact)" >Remove</button></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="searching">
+  <h3>Search Results</h3>
+<table class="table table-bordered table-striped table-hover ">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Phone</th>
+      <th>Email</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let contact of contacts | filter:searchName | filter:searchPhone">
+      <td>{{contact.name}}</td>
+      <td>{{contact.phone}}</td>
+      <td>{{contact.email}}</td>
+      <td><button type="button" class="btn btn-danger" (click)="remove(contact)">Remove</button></td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+</div>

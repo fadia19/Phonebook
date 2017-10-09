@@ -1,0 +1,23 @@
+.container{
+    margin-top : 20px;
+}
+td{
+    vertical-align: center;
+    text-align: center;
+}
+th{
+    vertical-align: center;
+    text-align: center;
+}
+
+.table{
+    height: 200px !important;
+}
+
+.alert-danger{
+    width : 150px;
+    height : 50px;
+    vertical-align: center;
+    text-align: center;
+
+}
